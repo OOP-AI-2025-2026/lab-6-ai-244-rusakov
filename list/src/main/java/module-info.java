@@ -1,6 +1,7 @@
 module ua.opnu.list {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
     requires org.controlsfx.controls;
 
