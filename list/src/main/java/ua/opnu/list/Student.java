@@ -41,7 +41,7 @@ public class Student {
         builder.append(lastName);
         builder.append(" ");
         builder.append(name);
-        builder.append(", середній бал: ").append(avgMark);
+        builder.append(", AVERAGE: ").append(avgMark);
 
         return builder.toString();
     }

@@ -19,95 +19,68 @@ import javafx.stage.Stage;
 import java.util.Comparator;
 
 /*
- * Цей клас успадковується від стандартного класу Application.
- * Клас Application відповідає за роботу FX-додатку.
- * Якщо ви пишете додаток з використанням бібліотеки javaFX, то ви
- * повинні створити свій клас, який успадковується від класу Application
+ * Клас успадковує Application і є точкою входу для JavaFX-застосунку.
  */
 public class SortingList extends Application {
 
-    // Список студентів.
-    // Інтерфейс ObservableList схожий на інтерфейс List, але
-    // має можливість оповіщати інші об'єкти у тому, що він змінився
+    // Колекція студентів з підтримкою сповіщень про зміни
     private ObservableList<Student> students;
 
     /*
-     * Цей метод запускається, коли запускається ваш додаток.
-     * Stage - клас "підмостки". Вважайте, що це щось подібне до вікна додатку.
-     * Просто в JavaFX вікно називається "підмостками", як театральні підмостки.
-     * Найперші "підмостки" (перше вікно програми) створює за вас система і передає
-     * його вам як вхідний параметр. Якщо ви захочете створити додаткові "підмостки"
-     * - ви повинні зробити це самі
+     * Метод викликається при запуску застосунку.
+     * Створює головне вікно (Stage) та наповнює його елементами.
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Заголовок вікна
         primaryStage.setTitle("Список студентів");
 
-        // Заповнюємо список студентів даними
+        // Ініціалізація колекції студентів
         students = populateList();
 
-        // Це вертикальний ряд із елементами
+        // Основний вертикальний контейнер
         final VBox vbox = new VBox();
-        // Відстань між елементами
         vbox.setSpacing(5);
-        // Встановлюємо padding у 5 пікселів у всіх напрямках
         vbox.setPadding(new Insets(5));
         vbox.setAlignment(Pos.CENTER);
 
-        // Це віджет списку, у ньому можна відображати список із даними.
-        // Під час створення віджету списку, передаємо йому список (students) зі студентами
-        // Для кожного студента зі списку викликається метод toString() і виводиться на екран
+        // Компонент для відображення списку студентів
         final ListView<Student> listView = new ListView<>(students);
-        // Переважні розміри віджету списку
         listView.setPrefSize(400, 240);
 
-        // Настроюємо горизонтальний ряд кнопок
+        // Додаємо список і кнопки в контейнер
         final HBox hbox = setButtons();
-
-        // Додаємо зверху віджет списку, після чого додаємо рядок з кнопками
         vbox.getChildren().addAll(listView, hbox);
 
-        // Це клас "Сцена", який є контейнером для всіх інших віджетів.
-        // На "сцені" розташовані кнопки, поля, перемикачі тощо.
-        // У нашому випадку, на сцені у нас розташований вертикальний ряд елементів
-        // де зверху буде список зі студентами, а знизу – ряд із кнопками
+        // Створюємо сцену й прикріплюємо її до вікна
         Scene scene = new Scene(vbox);
-
-        // Додаємо об'єкт сцени до Stage. Сцени можна міняти простим методом, що
-        // дозволяє дуже просто змінювати вміст вікон
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        // Показуємо "підмостки"
         primaryStage.show();
     }
 
     /*
-     * Заповнюємо список даними вручну
+     * Наповнює список студентів вручну
      */
     private ObservableList<Student> populateList() {
-        Student student1 = new Student("Борис", "Іванов", 75);
-        Student student2 = new Student("Петро", "Петренко", 92);
-        Student student3 = new Student("Сергій", "Сергієнко", 61);
-        Student student4 = new Student("Григорій", "Сковорода", 88);
+        Student student1 = new Student("Григорій", "Іванов", 75);
+        Student student2 = new Student("Сергій", "Петренко", 92);
+        Student student3 = new Student("Григорій", "Сергієнко", 61);
+        Student student4 = new Student("Максим", "Сковорода", 88);
 
-        // Клас ObservableArrayList дуже схожий на ArrayList,
-        // але дозволяє сповіщати інші класи у тому, що він змінився
+        // Створюємо ObservableList зі студентами
         return FXCollections.observableArrayList(
                 student1, student2, student3, student4);
     }
 
     /*
-     * Налаштовуємо кнопки. Тут має бути ваш код
+     * Створює горизонтальний контейнер із кнопками сортування
      */
     private HBox setButtons() {
-        // Кнопка JavaFX має клас Button
         final Button sortByNameButton = new Button("Сортувати за ім'ям");
         final Button sortByLastNameButton = new Button("Сортувати за прізвищем");
         final Button sortByMarkButton = new Button("Сортувати за оцінкою");
 
-        // Блок коду нижче дозволяє кнопкам розтягуватися завширшки, щоб зайняти
-        // весь простір HBox, причому кнопки будуть однакового розміру
+        // Розтягуємо кнопки по ширині
         HBox.setHgrow(sortByNameButton, Priority.ALWAYS);
         HBox.setHgrow(sortByLastNameButton, Priority.ALWAYS);
         HBox.setHgrow(sortByMarkButton, Priority.ALWAYS);
@@ -115,37 +88,40 @@ public class SortingList extends Application {
         sortByLastNameButton.setMaxWidth(Double.MAX_VALUE);
         sortByMarkButton.setMaxWidth(Double.MAX_VALUE);
 
-        // Обробка натискання кнопки за допомогою об'єкта анонімного класу,
-        // реалізує інтерфейс Comparable
+        // Прапори для зміни порядку сортування
+        final boolean[] nameOrder = {true};
+        final boolean[] lastNameOrder = {true};
+        final boolean[] markOrder = {true};
 
-        final boolean[] order = {true};
-
-        sortByNameButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                students.sort(new NameSorter(order[0]));
-                order[0] = !order[0];
-            }
+        // Обробник сортування за ім’ям
+        sortByNameButton.setOnAction(event -> {
+            students.sort(new NameSorter(nameOrder[0]));
+            nameOrder[0] = !nameOrder[0];
         });
 
-        // TODO: Обробка натискання на кнопку "Сортувати за прізвищем"
+        // Обробник сортування за прізвищем
+        sortByLastNameButton.setOnAction(event -> {
+            students.sort(new LastNameSorter(lastNameOrder[0]));
+            lastNameOrder[0] = !lastNameOrder[0];
+        });
 
-        // TODO: Обробка натискання на кнопку "Сортувати за оцінкою"
+        // Обробник сортування за оцінкою
+        sortByMarkButton.setOnAction(event -> {
+            students.sort(new MarkSorter(markOrder[0]));
+            markOrder[0] = !markOrder[0];
+        });
 
-        // Створюємо горизонтальний ряд
+        // Формування контейнера з кнопками
         HBox hb = new HBox();
-        // Відстань між елементами ряду
         hb.setSpacing(5);
-        // Додаємо до ряду елементи. У нашому випадку – кнопки
         hb.getChildren().addAll(sortByNameButton, sortByLastNameButton, sortByMarkButton);
-        // Говоримо, що елементи в ряді мають бути вирівняні по центру
         hb.setAlignment(Pos.CENTER);
 
         return hb;
     }
 
     public static void main(String[] args) {
-        // Метод запускає додаток
+        // Запуск програми
         launch(args);
     }
 }
