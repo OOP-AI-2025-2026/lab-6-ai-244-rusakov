@@ -46,26 +46,21 @@ public class Car implements Comparable {
 
         Car other = (Car) obj;
 
-        // 1️⃣ Спочатку порівнюємо ціну (менша ціна — «краще»)
         if (this.price != other.price) {
             return (this.price < other.price) ? 1 : -1;
         }
 
-        // 2️⃣ Якщо ціни рівні — порівнюємо рік (новіший — «краще»)
         if (this.year != other.year) {
             return (this.year > other.year) ? 1 : -1;
         }
 
-        // 3️⃣ Якщо рік однаковий — порівнюємо кінські сили (більше — «краще»)
         if (this.horsePower != other.horsePower) {
             return (this.horsePower > other.horsePower) ? 1 : -1;
         }
 
-        // 4️⃣ Якщо всі параметри однакові
         return 0;
     }
 
-    // Для зручного виведення інформації
     @Override
     public String toString() {
         return "Car{price=" + price + ", year=" + year + ", horsePower=" + horsePower + "}";

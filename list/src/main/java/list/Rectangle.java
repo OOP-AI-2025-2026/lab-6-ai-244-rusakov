@@ -9,15 +9,19 @@ public class Rectangle extends DrawShape {
     public Rectangle() {
     }
 
-    public Rectangle(java.awt.Point startPoint, java.awt.Point endPoint) {
+    public Rectangle(Point startPoint, Point endPoint) {
         super(startPoint, endPoint);
     }
 
-    // Для створення прямокутника застосовується клас Rectangle2D.Double (внутрішній клас Double класу Rectangle2D).
-    // Клас Rectangle2D.Double працює з координатами типу Double
+    // Для побудови прямокутника використовується клас Rectangle2D.Double,
+    // який працює з координатами у форматі double
     @Override
-    public Shape getShape(java.awt.Point startPoint, Point endPoint) {
-        return new Rectangle2D.Double(Math.min(startPoint.getX(), endPoint.getX()), Math.min(startPoint.getY(), endPoint.getY()),
-                Math.abs(startPoint.getX() - endPoint.getX()), Math.abs(startPoint.getY() - endPoint.getY()));
+    public Shape getShape(Point startPoint, Point endPoint) {
+        return new Rectangle2D.Double(
+                Math.min(startPoint.getX(), endPoint.getX()),
+                Math.min(startPoint.getY(), endPoint.getY()),
+                Math.abs(startPoint.getX() - endPoint.getX()),
+                Math.abs(startPoint.getY() - endPoint.getY())
+        );
     }
 }
