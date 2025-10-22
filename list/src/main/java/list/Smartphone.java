@@ -12,24 +12,26 @@ class Smartphone implements GPS, Cellular {
         this.longitude = longitude;
     }
 
+    // Реалізація методу з інтерфейсу GPS
     @Override
     public double[] getCoordinates() {
         return new double[]{latitude, longitude};
     }
 
+    // Реалізація методів з інтерфейсу Cellular
     @Override
     public void makeCall() {
-        System.out.println(model + " calling...");
+        System.out.println(model + " здійснюємо виклик...");
     }
 
     @Override
     public void receiveCall() {
-        System.out.println(model + " calling...");
+        System.out.println(model + " приймаємо виклик...");
     }
 
     // Додатковий метод для виведення інформації
     public void showInfo() {
-        System.out.println("Model: " + model);
-        System.out.println("Now coords: (" + latitude + ", " + longitude + ")");
+        System.out.println("Модель телефону: " + model);
+        System.out.println("Поточні координати: (" + latitude + ", " + longitude + ")");
     }
 }

@@ -16,5 +16,6 @@ abstract class Animal {
         this.name = name;
     }
 
+    // Абстрактний метод, який має бути реалізований у класах-нащадках
     abstract String makeSound();
 }

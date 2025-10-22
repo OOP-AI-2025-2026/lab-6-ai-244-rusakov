@@ -11,6 +11,7 @@ public class MainForCar {
         compareCars(car2, car3);
     }
 
+    // Метод для зручного відображення результатів порівняння
     private static void compareCars(Car c1, Car c2) {
         int result = c1.compareTo(c2);
         System.out.println("Порівняння автомобілів:");
@@ -18,11 +19,11 @@ public class MainForCar {
         System.out.println(c2);
 
         if (result > 0) {
-            System.out.println("The first is greater than second\n");
+            System.out.println("Перший автомобіль вважається БІЛЬШИМ за другий\n");
         } else if (result < 0) {
-            System.out.println("The second is greater than first\n");
+            System.out.println("Другий автомобіль вважається БІЛЬШИМ за перший\n");
         } else {
-            System.out.println("Cars by the parameters\n");
+            System.out.println("Автомобілі рівні за параметрами\n");
         }
     }
 }
